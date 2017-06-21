@@ -1,8 +1,7 @@
 sudo: required
-
+language: generic
 services:
   - docker
-
-scripts:
+script:
   - docker build -t downsize-test .
   - docker run downsize-test
