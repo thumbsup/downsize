@@ -5,17 +5,18 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "tape test/*.js | tap-spec",
-    "pretest": "standard"
+    "pretest": "standard && require-lint"
   },
   "author": "thumbsup",
   "license": "MIT",
   "dependencies": {
     "async": "^2.1.2",
     "gm": "^1.23.0",
-    "mkdirp": "^0.5.1",
-    "standard": "^10.0.2"
+    "mkdirp": "^0.5.1"
   },
   "devDependencies": {
+    "require-lint": "^1.2.0",
+    "standard": "^10.0.2",
     "tap-spec": "^4.1.1",
     "tape": "^4.6.3"
   }
