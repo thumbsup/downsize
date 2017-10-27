@@ -89,6 +89,14 @@ opts = {height, width}
 Transcodes the video in `source` to a web-friendly format and lower bitrate, and writes it in `target`.
 Currently doesn't support any options, simply pass an empty hash (`{}`).
 
+The `.video()` call returns an [EventEmitter](https://nodejs.org/api/events.html)
+to follow the progress of the conversion, since it can take a long time.
+
+```js
+const emitter = downsize.video(/* ... */)
+emitter.on('progress', percent => console.log(`${percent}%`))
+```
+
 ## Contributing
 
 Image/video resizing is hard to unit test.
