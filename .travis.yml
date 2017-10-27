@@ -1,7 +1,23 @@
-sudo: required
-language: generic
-services:
-  - docker
+language: node_js
+node_js:
+  - "6"
+  - "8"
+before_install:
+  # GraphicsMagick
+  - sudo apt-get -qq update
+  - sudo apt-get install -y graphicsmagick
+  # ffmpeg: install a static binary since it's not available in Ubuntu 14.04
+  - wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz
+  - sudo tar -xvJf ffmpeg-release-64bit-static.tar.xz --strip-components=1 -C /usr/local/bin
 script:
-  - docker build -t downsize-test .
-  - docker run downsize-test
+  - npm test
+jobs:
+  include:
+    - stage: npm release
+      script: echo "Deploying to npm ..."
+      deploy:
+        provider: npm
+        email: asyncadventures@gmail.com
+        api_key: $NPM_TOKEN
+        on:
+          tags: true
