@@ -9,6 +9,14 @@ tape('extracts a frame from an MP4 video', (test) => {
   })
 })
 
+tape('extracts a frame from a very short video', (test) => {
+  diff.still(test, {
+    input: 'videos/short.mp4',
+    expect: 'videos/short.jpg',
+    options: { width: 150 }
+  })
+})
+
 tape('extracts and crops a frame from an MP4 video', (test) => {
   diff.still(test, {
     input: 'videos/countdown.mp4',
