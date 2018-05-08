@@ -13,7 +13,7 @@ tape('resizes a JPEG file proportionally', (test) => {
   diff.image(test, {
     input: 'images/desk.jpg',
     expect: 'images/desk.large.jpg',
-    options: { width: 150 }
+    options: { height: 150 }
   })
 })
 
@@ -21,7 +21,7 @@ tape('can set a custom output quality', (test) => {
   diff.image(test, {
     input: 'images/desk.jpg',
     expect: 'images/desk.low.jpg',
-    options: { width: 100, quality: 30 }
+    options: { height: 100, quality: 30 }
   })
 })
 
@@ -37,7 +37,7 @@ tape('resizes a non-animated GIF proportionally', (test) => {
   diff.image(test, {
     input: 'images/countdown-frame.gif',
     expect: 'images/countdown-frame.large.gif',
-    options: { width: 150 }
+    options: { height: 150 }
   })
 })
 
@@ -53,7 +53,7 @@ tape('resizes a transparent GIF', (test) => {
   diff.image(test, {
     input: 'images/nyan-frame.gif',
     expect: 'images/nyan-frame.large.gif',
-    options: { width: 150 }
+    options: { height: 150 }
   })
 })
 
@@ -147,7 +147,7 @@ ORIENTATIONS.forEach((orientation) => {
     diff.image(test, {
       input: `rotations/landscape_${orientation}.jpg`,
       expect: `rotations/landscape_${orientation}.jpg`,
-      options: { width: 150 }
+      options: { height: 150 }
     })
   })
 })
@@ -157,7 +157,7 @@ ORIENTATIONS.forEach((orientation) => {
     diff.image(test, {
       input: `rotations/portrait_${orientation}.jpg`,
       expect: `rotations/portrait_${orientation}.jpg`,
-      options: { height: 150 }
+      options: { width: 150 }
     })
   })
 })
