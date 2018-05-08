@@ -48,14 +48,30 @@ Optionally specify `options` to resize the image:
 opts = {}
 
 // proportionally resize the photo to a maximum height
-opts = {height}
+opts = {height: 300}
 
 // proportionally resize the photo to a maximum width
-opts = {width}
+opts = {width: 300}
 
-// resize and crop the photo to exactly height x width (aspect ratio preserved)
-opts = {height, width}
+// resize and crop the photo to exactly height x width
+// the image will not be distorted
+opts = {height: 100, width: 100}
+
+// overlay a watermark on top of the image
+opts = {
+  watermark: {
+    // PNG file with transparency, relative to the working directory
+    file: 'path/watermark.png',
+    // NorthWest | North | NorthEast | West | Center | East | SouthWest | South | SouthEast
+    gravity: 'SouthEast',
+    // whether the watermark should be repeated across the whole image
+    tile: false
+  }
+}
 ```
+
+Note: watermarks are not compatible with cropped images.
+The `watermark` option will simply be ignored if both width and height are specified.
 
 ### .still
 
@@ -64,21 +80,7 @@ opts = {height, width}
 ```
 
 Extract a single frame from the video in `source`, and writes the image to `target`.
-Optionally specify `options` to resize the image:
-
-```js
-// don't resize
-opts = {}
-
-// proportionally resize the still to a maximum height
-opts = {height}
-
-// proportionally resize the still to a maximum width
-opts = {width}
-
-// resize and crop the still to exactly height x width (aspect ratio preserved)
-opts = {height, width}
-```
+This method supports all  the same options as `.image()`.
 
 ### .video
 

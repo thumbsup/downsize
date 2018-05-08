@@ -75,6 +75,71 @@ tape('converts a TIFF to JPEG', (test) => {
   })
 })
 
+tape('can add a watermark in the default location', (test) => {
+  diff.image(test, {
+    input: 'images/bike.jpg',
+    expect: 'images/bike-wm-default.jpg',
+    options: {
+      watermark: {
+        file: 'test-data/input/images/watermark.png'
+      }
+    }
+  })
+})
+
+tape('can add a watermark in a given location', (test) => {
+  diff.image(test, {
+    input: 'images/bike.jpg',
+    expect: 'images/bike-wm-gravity.jpg',
+    options: {
+      watermark: {
+        file: 'test-data/input/images/watermark.png',
+        gravity: 'NorthEast'
+      }
+    }
+  })
+})
+
+tape('can add a tiled watermark', (test) => {
+  diff.image(test, {
+    input: 'images/bike.jpg',
+    expect: 'images/bike-wm-tiled.jpg',
+    options: {
+      watermark: {
+        file: 'test-data/input/images/watermark.png',
+        tile: true
+      }
+    }
+  })
+})
+
+tape('includes the watermark when resizing', (test) => {
+  diff.image(test, {
+    input: 'images/bike.jpg',
+    expect: 'images/bike-wm-resize.jpg',
+    options: {
+      height: 200,
+      watermark: {
+        file: 'test-data/input/images/watermark.png'
+      }
+    }
+  })
+})
+
+tape('ignores the watermark when cropping', (test) => {
+  diff.image(test, {
+    input: 'images/bike.jpg',
+    expect: 'images/bike-wm-crop.jpg',
+    options: {
+      height: 100,
+      width: 100,
+      watermark: {
+        file: 'test-data/input/images/watermark.png'
+      }
+    }
+  })
+})
+
 const ORIENTATIONS = [1, 2, 3, 4, 5, 6, 7, 8]
 
 ORIENTATIONS.forEach((orientation) => {
