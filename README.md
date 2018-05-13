@@ -71,6 +71,14 @@ opts = {
     tile: false
   }
 }
+
+// custom post-processing using GraphicsMagick output arguments
+options = {
+  args: [
+    '-unsharp 2 0.5 0.7 0',
+    '-modulate 120'
+  ]
+}
 ```
 
 Note: watermarks are not compatible with cropped images.

@@ -140,6 +140,16 @@ tape('ignores the watermark when cropping', (test) => {
   })
 })
 
+tape('can add custom post-processing arguments', (test) => {
+  diff.image(test, {
+    input: 'images/desk.jpg',
+    expect: 'images/desk.processed.jpg',
+    options: {
+      args: ['-equalize', '-modulate 120']
+    }
+  })
+})
+
 const ORIENTATIONS = [1, 2, 3, 4, 5, 6, 7, 8]
 
 ORIENTATIONS.forEach((orientation) => {
