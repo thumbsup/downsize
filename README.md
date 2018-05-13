@@ -41,7 +41,7 @@ downsize.image('source.tiff', 'thumb.jpg', options, (err) => {
 
 Processes the image in `source` and creates a new image in `target`.
 The image is appropriately converted if needed based on the `target` file extension.
-Optionally specify `options` to resize the image:
+You can specify the following options:
 
 ```js
 // don't resize, just convert
@@ -56,6 +56,9 @@ opts = {width: 300}
 // resize and crop the photo to exactly height x width
 // the image will not be distorted
 opts = {height: 100, width: 100}
+
+// quality of the target image (0-100)
+opts = {quality: 80}
 
 // overlay a watermark on top of the image
 opts = {
