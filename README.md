@@ -43,24 +43,30 @@ Processes the image in `source` and creates a new image in `target`.
 The image is appropriately converted if needed based on the `target` file extension.
 You can specify the following options:
 
-```js
-// don't resize, just convert
-opts = {}
+##### Image size
 
+```js
 // proportionally resize the photo to a maximum height
-opts = {height: 300}
+opts = { height: 300 }
 
 // proportionally resize the photo to a maximum width
-opts = {width: 300}
+opts = { width: 300 }
 
 // resize and crop the photo to exactly height x width
 // the image will not be distorted
-opts = {height: 100, width: 100}
+opts = { height: 100, width: 100 }
+```
 
-// quality of the target image (0-100)
-opts = {quality: 80}
+##### Image quality
 
-// overlay a watermark on top of the image
+```js
+// quality between 0 and 100
+opts = { quality: 80 }
+```
+
+##### Watermark
+
+```js
 opts = {
   watermark: {
     // PNG file with transparency, relative to the working directory
@@ -71,8 +77,17 @@ opts = {
     tile: false
   }
 }
+```
 
-// custom post-processing using GraphicsMagick output arguments
+Note: watermarks are not compatible with cropped images.
+The `watermark` option will simply be ignored if both width and height are specified.
+
+##### Post-processing
+
+You can specify extra arguments that will be passed to GraphicsMagick.
+This only works with [output arguments](https://github.com/aheckmann/gm#custom-arguments).
+
+```js
 options = {
   args: [
     '-unsharp 2 0.5 0.7 0',
@@ -80,9 +95,6 @@ options = {
   ]
 }
 ```
-
-Note: watermarks are not compatible with cropped images.
-The `watermark` option will simply be ignored if both width and height are specified.
 
 ### .still
 
