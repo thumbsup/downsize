@@ -1,7 +1,7 @@
 const gm = require('gm')
 const convert = require('../lib/index')
 
-const TOLERANCE = { tolerance: 0.005 }
+const TOLERANCE = { tolerance: 0.001 }
 
 // process an image, and compare to the expected output
 exports.image = function (test, args) {
