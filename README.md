@@ -66,18 +66,24 @@ opts = { quality: 80 }
 
 ##### Watermark
 
+You can overlay a transparent watermark over the final image:
+
 ```js
 opts = {
   watermark: {
-    // PNG file with transparency, relative to the working directory
-    file: 'path/watermark.png',
-    // NorthWest | North | NorthEast | West | Center | East | SouthWest | South | SouthEast
-    gravity: 'SouthEast',
-    // whether the watermark should be repeated across the whole image
-    tile: false
+    file: 'path/watermark.png',  // transparent PNG
+    position: 'NorthEast'        // position of the watermark
   }
 }
 ```
+
+The possible values for `position` are:
+
+- `Repeat` to repeat the watermark across the whole image
+- `Center` to position the watermark in the middle
+- `NorthWest`, `North`, `NorthEast`, `West`, `East`, `SouthWest`, `South`, `SouthEast` to position the watermark along the edge
+
+![watermark](docs/watermark.jpg) ![tiled](docs/watermark-tiled.jpg)
 
 Note: watermarks are not compatible with cropped images.
 The `watermark` option will simply be ignored if both width and height are specified.

@@ -94,7 +94,7 @@ tape('can add a watermark in a given location', (test) => {
     options: {
       watermark: {
         file: 'test-data/input/images/watermark.png',
-        gravity: 'NorthEast'
+        position: 'NorthEast'
       }
     }
   })
@@ -107,7 +107,7 @@ tape('can add a tiled watermark', (test) => {
     options: {
       watermark: {
         file: 'test-data/input/images/watermark.png',
-        tile: true
+        position: 'Repeat'
       }
     }
   })
