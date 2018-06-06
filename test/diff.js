@@ -1,7 +1,7 @@
+const _ = require('lodash')
+const childProcess = require('child_process')
 const gm = require('gm')
 const convert = require('../lib/index')
-
-const TOLERANCE = { tolerance: 0.001 }
 
 // process an image, and compare to the expected output
 exports.image = function (test, args) {
@@ -40,10 +40,42 @@ exports.video = function (test, args) {
 }
 
 function compareImage (test, expected, actual) {
-  gm.compare(expected, actual, TOLERANCE, (err, similar) => {
+  const isGif = actual.match(/\.gif$/i)
+  test.test('metadata', t => {
+    const fields = isGif ? ['AnimationIterations', 'FrameCount', 'Duration', 'ImageSize'] : ['ImageSize', 'Megapixels']
+    compareMetadata(t, expected, actual, fields)
+  })
+  test.test('visual', t => {
+    // We have to be less picky when comparing GIFs
+    // because Gifsicle produces slightly different results between versions
+    const tolerance = isGif ? 0.3 : 0.001
+    compareVisual(t, expected, actual, tolerance)
+  })
+}
+
+function compareMetadata (test, expected, actual, fields) {
+  try {
+    test.deepEqual(
+      _.pick(exiftool(actual), fields),
+      _.pick(exiftool(expected), fields),
+      `${actual} has same metadata as expected`
+    )
+    test.end()
+  } catch (ex) {
+    test.end(`exiftool failed to get metadata`)
+  }
+}
+
+function compareVisual (test, expected, actual, tolerance) {
+  gm.compare(expected, actual, tolerance, (err, similar, equality) => {
     if (err) return test.end(err)
-    if (!similar) return test.end(`${expected} is different from expected`)
-    test.pass(`${expected} is as expected`)
+    if (!similar) return test.end(`${actual} is visually different from expected (equality=${equality})`)
+    test.pass(`${actual} is visually similar to expected`)
     test.end()
   })
+}
+
+function exiftool (imagePath) {
+  const output = childProcess.execSync(`exiftool -j ${imagePath}`)
+  return JSON.parse(output)[0]
 }

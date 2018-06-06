@@ -25,45 +25,51 @@ tape('can set a custom output quality', (test) => {
   })
 })
 
-tape('crops a non-animated GIF', (test) => {
+tape('create a cropped frame from an animated GIF', (test) => {
   diff.image(test, {
-    input: 'images/countdown-frame.gif',
-    expect: 'images/countdown-frame.thumb.gif',
-    options: { height: 100, width: 100 }
+    input: 'images/simpsons.gif',
+    expect: 'images/simpsons.cropped.gif',
+    options: {
+      height: 150,
+      width: 150
+    }
   })
 })
 
-tape('resizes a non-animated GIF proportionally', (test) => {
+tape('creates a resized frame from an animated GIF', (test) => {
   diff.image(test, {
-    input: 'images/countdown-frame.gif',
-    expect: 'images/countdown-frame.large.gif',
-    options: { height: 150 }
+    input: 'images/simpsons.gif',
+    expect: 'images/simpsons.resized.gif',
+    options: {
+      height: 150
+    }
   })
 })
 
-tape('crops a transparent GIF', (test) => {
+tape('creates a resized animated GIF', (test) => {
   diff.image(test, {
-    input: 'images/nyan-frame.gif',
-    expect: 'images/nyan-frame.thumb.gif',
-    options: { height: 100, width: 100 }
+    input: 'images/simpsons.gif',
+    expect: 'images/simpsons.anim.gif',
+    options: {
+      height: 150,
+      animated: true
+    }
   })
 })
 
-tape('resizes a transparent GIF', (test) => {
+tape('extract a frame from a transparent animated GIF', (test) => {
   diff.image(test, {
-    input: 'images/nyan-frame.gif',
-    expect: 'images/nyan-frame.large.gif',
-    options: { height: 150 }
+    input: 'images/toad.gif',
+    expect: 'images/toad.frame.gif',
+    options: { height: 100 }
   })
 })
 
-// should be a single frame, a cropped animation wouldn't make much sense
-// currently an issue, the thumbnail is all weird
-tape.skip('crops an animated GIF to a single frame', (test) => {
+tape('resizes a transparent animated GIF', (test) => {
   diff.image(test, {
-    input: 'images/nyan.gif',
-    expect: 'images/nyan.thumb.gif',
-    options: { height: 100, width: 100 }
+    input: 'images/toad.gif',
+    expect: 'images/toad.gif',
+    options: { height: 100, animated: true }
   })
 })
 

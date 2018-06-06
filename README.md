@@ -17,8 +17,11 @@ This is one of the core modules of [thumbsup.github.io](https://thumbsup.github.
 npm install thumbsup-downsize --save
 ```
 
-This module requires [GraphicsMagick](http://www.graphicsmagick.org/)
-and [FFMpeg](https://ffmpeg.org/) on the target system, available in the system path.
+This module requires the following binaries available in the system path:
+
+- [GraphicsMagick](http://www.graphicsmagick.org/) for processing images
+- [FFMpeg](https://ffmpeg.org/) for processing videos
+- [Gifsicle](http://www.lcdf.org/gifsicle/) for processing animated GIFs
 
 ## Usage
 
@@ -94,13 +97,31 @@ You can specify extra arguments that will be passed to GraphicsMagick.
 This only works with [output arguments](https://github.com/aheckmann/gm#custom-arguments).
 
 ```js
-options = {
+opts = {
   args: [
     '-unsharp 2 0.5 0.7 0',
     '-modulate 120'
   ]
 }
 ```
+
+##### GIF animation
+
+By default, only the first frame of an animated GIF is exported.
+You can keep the entire animation by specifying:
+
+```js
+opts = { animated: true }
+```
+
+This offloads the processing of the image to [Gifsicle](https://github.com/kohler/gifsicle).
+Note that:
+
+- The destination file extension *must* be `.gif`
+- The only other supported parameters are `width` and `height` (e.g. no watermarks)
+- Cropping (specifying *both* width and height) is not supported and will throw an error
+
+The flag is simply ignored if the source file is not a GIF.
 
 ### .still
 

@@ -17,6 +17,7 @@
     "split": "^1.0.1"
   },
   "devDependencies": {
+    "lodash": "^4.17.10",
     "mock-spawn": "^0.2.6",
     "require-lint": "^1.2.0",
     "sinon": "^4.1.3",
