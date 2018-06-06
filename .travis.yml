@@ -1,18 +1,12 @@
-language: node_js
-node_js:
-  - "6"
-  - "8"
-before_install:
-  # GraphicsMagick
-  - sudo apt-get -qq update
-  - sudo apt-get install -y graphicsmagick
-  # ffmpeg: install a static binary since it's not available in Ubuntu 14.04
-  - wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz
-  - sudo tar -xvJf ffmpeg-release-64bit-static.tar.xz --strip-components=1 -C /usr/local/bin
-script:
-  - npm test
+# Run the whole build inside Docker
+sudo: required
+services:
+  - docker
+
 jobs:
   include:
+    - stage: build
+      script: docker build .
     - stage: npm release
       script: echo "Deploying to npm ..."
       deploy:
