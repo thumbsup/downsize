@@ -17,6 +17,14 @@ tape('extracts a frame from a very short video', (test) => {
   })
 })
 
+tape('extracts a frame from a video that only has a single frame', (test) => {
+  diff.still(test, {
+    input: 'videos/single-frame.mov',
+    expect: 'videos/single-frame.jpg',
+    options: { height: 150 }
+  })
+})
+
 tape('extracts and crops a frame from an MP4 video', (test) => {
   diff.still(test, {
     input: 'videos/countdown.mp4',
