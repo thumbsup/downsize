@@ -139,7 +139,14 @@ This method supports all  the same options as `.image()`.
 ```
 
 Transcodes the video in `source` to a web-friendly format and lower bitrate, and writes it in `target`.
-Currently doesn't support any options, simply pass an empty hash (`{}`).
+
+#### format
+
+The default export format is mp4. You can specify an export format by adding a `format` option whose value can be `mp4` or `webm`.
+
+```js
+opts = { format: webm }
+```
 
 The `.video()` call returns an [EventEmitter](https://nodejs.org/api/events.html)
 to follow the progress of the conversion, since it can take a long time.
