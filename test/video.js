@@ -11,6 +11,16 @@ tape('can downsample a video for a smaller filesize', (test) => {
   })
 })
 
+tape('can convert a video to webm', (test) => {
+  diff.video(test, {
+    input: 'videos/short.mp4',
+    expect: 'videos/short.webm',
+    options: {
+      format: 'webm'
+    }
+  })
+})
+
 tape('can report progress when processing videos', (t) => {
   const report = []
   const input = 'test-data/input/videos/big_buck_bunny.mp4'
