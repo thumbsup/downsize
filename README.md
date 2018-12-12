@@ -23,6 +23,10 @@ This module requires the following binaries available in the system path:
 - [FFMpeg](https://ffmpeg.org/) for processing videos
 - [Gifsicle](http://www.lcdf.org/gifsicle/) for processing animated GIFs
 
+To run the tests, you will also need
+
+- [ExifTool](http://www.sno.phy.queensu.ca/~phil/exiftool/)
+
 ## Usage
 
 ```js
