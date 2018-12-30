@@ -152,6 +152,14 @@ The default export format is mp4. You can specify an export format by adding a `
 opts = { format: webm }
 ```
 
+#### bitrate
+
+The default export bitrate depends on the codec used. You can specify an export bitrate by adding a `bitrate` option. Check [ffmpeg docmentation](https://trac.ffmpeg.org/wiki/Encode/H.264) for more information.
+
+```js
+opts = { bitrate: xxx }
+```
+
 The `.video()` call returns an [EventEmitter](https://nodejs.org/api/events.html)
 to follow the progress of the conversion, since it can take a long time.
 
