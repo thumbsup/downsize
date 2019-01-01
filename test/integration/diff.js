@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const childProcess = require('child_process')
 const gm = require('gm')
-const convert = require('../lib/index')
+const convert = require('../../lib/index')
 
 // process an image, and compare to the expected output
 exports.image = function (test, args) {

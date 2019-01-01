@@ -1,7 +1,7 @@
 const assert = require('assert')
 const tape = require('tape')
 const diff = require('./diff')
-const convert = require('../lib/index')
+const convert = require('../../lib/index')
 
 tape('can downsample a video for a smaller filesize', (test) => {
   diff.video(test, {

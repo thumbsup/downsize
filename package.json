@@ -4,7 +4,7 @@
   "description": "Convert / resize / transcode photos & videos to be web-friendly",
   "main": "lib/index.js",
   "scripts": {
-    "test": "tape test/*.js | tap-spec",
+    "test": "tape test/**/*.js | tap-spec",
     "pretest": "standard && require-lint"
   },
   "author": "thumbsup",

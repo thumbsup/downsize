@@ -1,7 +1,7 @@
 const assert = require('assert')
 const tape = require('tape')
 const childProcess = require('child_process')
-const ffmpeg = require('../lib/ffmpeg')
+const ffmpeg = require('../../lib/video/ffmpeg')
 const mockSpawn = require('mock-spawn')
 const sinon = require('sinon')
 
