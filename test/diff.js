@@ -32,7 +32,7 @@ exports.video = function (test, args) {
   const expected = `test-data/expected/${args.expect}`
   convert.video(input, actual, args.options, (err) => {
     if (err) return test.end(err)
-    convert.still(actual, `${actual}.jpg`, args.options, (err) => {
+    convert.still(actual, `${actual}.jpg`, {}, (err) => {
       if (err) return test.end(err)
       compareImage(test, `${expected}.jpg`, `${actual}.jpg`)
     })

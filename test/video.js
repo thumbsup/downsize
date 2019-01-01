@@ -21,6 +21,28 @@ tape('can convert a video to webm', (test) => {
   })
 })
 
+tape('can convert to MP4 with a target bitrate', (test) => {
+  diff.video(test, {
+    input: 'videos/countdown.mp4',
+    expect: 'videos/countdown-bitrate.mp4',
+    options: {
+      format: 'mp4',
+      bitrate: '100k'
+    }
+  })
+})
+
+tape('can convert to WEBM with a target bitrate', (test) => {
+  diff.video(test, {
+    input: 'videos/countdown.mp4',
+    expect: 'videos/countdown-bitrate.webm',
+    options: {
+      format: 'webm',
+      bitrate: '100k'
+    }
+  })
+})
+
 tape('can report progress when processing videos', (t) => {
   const report = []
   const input = 'test-data/input/videos/big_buck_bunny.mp4'

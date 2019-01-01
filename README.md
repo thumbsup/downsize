@@ -143,22 +143,26 @@ This method supports all  the same options as `.image()`.
 ```
 
 Transcodes the video in `source` to a web-friendly format and lower bitrate, and writes it in `target`.
+You can specify the following options:
 
-#### format
+##### Format
 
 The default export format is mp4. You can specify an export format by adding a `format` option whose value can be `mp4` or `webm`.
 
 ```js
-opts = { format: webm }
+opts = { format: 'webm' }
 ```
 
-#### bitrate
+#### Variable bitrate
 
-The default export bitrate depends on the codec used. You can specify an export bitrate by adding a `bitrate` option. Check [ffmpeg docmentation](https://trac.ffmpeg.org/wiki/Encode/H.264) for more information.
+You can specify a variable bitrate (a.k.a. average bitrate, or target bitrate) by using the `bitrate` option.
+Check the [ffmpeg docmentation](https://trac.ffmpeg.org/wiki/Encode/H.264) for more information.
 
 ```js
-opts = { bitrate: xxx }
+opts = { bitrate: '1200k' }
 ```
+
+##### Conversion progress
 
 The `.video()` call returns an [EventEmitter](https://nodejs.org/api/events.html)
 to follow the progress of the conversion, since it can take a long time.
