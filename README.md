@@ -207,5 +207,4 @@ If you don't have all dependencies installed, you can also run the tests in Dock
 
 ```bash
 docker build -t downsize-test .
-docker run downsize-test
 ```
