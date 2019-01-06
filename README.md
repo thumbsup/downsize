@@ -153,10 +153,29 @@ The default export format is mp4. You can specify an export format by adding a `
 opts = { format: 'webm' }
 ```
 
-#### Variable bitrate
+##### Video quality
 
-You can specify a variable bitrate (a.k.a. average bitrate, or target bitrate) by using the `bitrate` option.
+The default behaviour is to use CRF (constant rate factor) to control the output quality.
+The default value is `75%`.
+
+```js
+// value between 0 (worst) and 100 (best)
+opts = { quality: 75 }
+```
+
+Notes:
+
+- the quality scale is not linear
+- you will most likely want a value between 50% and 90%
+- values over 90% can generate files larger than the original
+
+![Quality size ratio](docs/quality.png)
+
+##### Variable bitrate
+
+Instead of CRF, you can specify a variable bitrate (a.k.a. average bitrate, or target bitrate) by using the `bitrate` option.
 Check the [ffmpeg docmentation](https://trac.ffmpeg.org/wiki/Encode/H.264) for more information.
+This is not compatible with the `quality` option.
 
 ```js
 opts = { bitrate: '1200k' }
