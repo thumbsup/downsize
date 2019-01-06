@@ -14,7 +14,7 @@ tape('setup', t => {
 tape('calls the callback when ffmpeg exits with code 0', (t) => {
   spawn.setStrategy(cmd => spawn.simple(0))
   ffmpeg.exec(['--fake'], err => {
-    assert.equal(err, null)
+    assert.strictEqual(err, null)
     t.end()
   })
 })
@@ -22,7 +22,7 @@ tape('calls the callback when ffmpeg exits with code 0', (t) => {
 tape('calls the callback with an error when ffmpeg exits with code 1', (t) => {
   spawn.setStrategy(cmd => spawn.simple(1))
   ffmpeg.exec(['--fake'], err => {
-    assert.equal(err.message, 'ffmpeg exited with code 1')
+    assert.strictEqual(err.message, 'ffmpeg exited with code 1')
     t.end()
   })
 })
@@ -36,7 +36,7 @@ tape('reports progress when ffmpeg emits a duration update', (t) => {
   })
   const progress = ffmpeg.exec(['--fake'])
   progress.on('progress', percent => {
-    assert.equal(percent, 50)
+    assert.strictEqual(percent, 50)
     t.end()
   })
 })
@@ -52,7 +52,7 @@ tape('can parse duration and progress even when lines are emitted in chunks', (t
   })
   const progress = ffmpeg.exec(['--fake'])
   progress.on('progress', percent => {
-    assert.equal(percent, 50)
+    assert.strictEqual(percent, 50)
     t.end()
   })
 })
@@ -68,7 +68,7 @@ tape('reports progress even when duration and time are emitted together', (t) =>
   })
   const progress = ffmpeg.exec(['--fake'])
   progress.on('progress', percent => {
-    assert.equal(percent, 50)
+    assert.strictEqual(percent, 50)
     t.end()
   })
 })
@@ -86,8 +86,8 @@ tape('reports progress throughout and finally terminates', (t) => {
     }
   })
   const progress = ffmpeg.exec(['--fake'], err => {
-    assert.equal(err, null)
-    assert.deepEqual(percents, [25, 50, 75, 100])
+    assert.strictEqual(err, null)
+    assert.deepStrictEqual(percents, [25, 50, 75, 100])
     t.end()
   })
   progress.on('progress', percent => percents.push(percent))
