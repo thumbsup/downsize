@@ -147,11 +147,15 @@ You can specify the following options:
 
 ##### Format
 
-The default export format is mp4. You can specify an export format by adding a `format` option whose value can be `mp4` or `webm`.
+The default export format is `mp4`.
+You can specify an export format by adding a `format` option:
 
 ```js
-opts = { format: 'webm' }
+opts = { format: 'mp4'  } // H264 encoder
+opts = { format: 'webm' } // VP9 encoder
 ```
+
+Note: encoding as `webm` is much slower.
 
 ##### Video quality
 
