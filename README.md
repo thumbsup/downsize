@@ -17,9 +17,10 @@ This is one of the core modules of [thumbsup.github.io](https://thumbsup.github.
 npm install thumbsup-downsize --save
 ```
 
-This module requires the following binaries available in the system path:
+This module requires the following binaries available in the system path, depending on the type of files you need to process:
 
 - [GraphicsMagick](http://www.graphicsmagick.org/) for processing images
+- [ImageMagick](https://imagemagick.org/) for HEIC support
 - [FFMpeg](https://ffmpeg.org/) for processing videos
 - [Gifsicle](http://www.lcdf.org/gifsicle/) for processing animated GIFs
 

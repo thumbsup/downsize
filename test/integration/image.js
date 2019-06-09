@@ -156,6 +156,36 @@ tape('can add custom post-processing arguments', (test) => {
   })
 })
 
+tape('can process a single-image HEIC file', (test) => {
+  diff.image(test, {
+    input: 'images/heic-single.heic',
+    expect: 'images/heic-single.jpg',
+    options: {
+      height: 300
+    }
+  })
+})
+
+tape('can process a burst-image HEIC file', (test) => {
+  diff.image(test, {
+    input: 'images/heic-burst.heic',
+    expect: 'images/heic-burst.jpg',
+    options: {
+      height: 300
+    }
+  })
+})
+
+tape('can process a live (photo + video) HEIC file', (test) => {
+  diff.image(test, {
+    input: 'images/heic-live.heic',
+    expect: 'images/heic-live.jpg',
+    options: {
+      height: 300
+    }
+  })
+})
+
 const ORIENTATIONS = [1, 2, 3, 4, 5, 6, 7, 8]
 
 ORIENTATIONS.forEach((orientation) => {
