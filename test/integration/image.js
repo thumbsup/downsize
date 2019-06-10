@@ -186,6 +186,16 @@ tape('can process a live (photo + video) HEIC file', (test) => {
   })
 })
 
+tape('can process a HEIC with a P3 color profile', (test) => {
+  diff.image(test, {
+    input: 'images/heic-color-profile.heic',
+    expect: 'images/heic-color-profile.jpg',
+    options: {
+      height: 300
+    }
+  })
+})
+
 const ORIENTATIONS = [1, 2, 3, 4, 5, 6, 7, 8]
 
 ORIENTATIONS.forEach((orientation) => {
