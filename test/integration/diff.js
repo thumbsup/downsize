@@ -4,74 +4,64 @@ const gm = require('gm')
 const convert = require('../../lib/index')
 
 // process an image, and compare to the expected output
-exports.image = function (test, args) {
+exports.image = function (args, done) {
   const input = `test-data/input/${args.input}`
   const actual = `test-data/actual/${args.expect}`
   const expected = `test-data/expected/${args.expect}`
   convert.image(input, actual, args.options, (err) => {
-    if (err) return test.end(err)
-    compareImage(test, expected, actual)
+    if (err) throw err
+    compareImage(expected, actual, done)
   })
 }
 
 // extract a video still, and compare to the expected image output
-exports.still = function (test, args) {
+exports.still = function (args, done) {
   const input = `test-data/input/${args.input}`
   const actual = `test-data/actual/${args.expect}`
   const expected = `test-data/expected/${args.expect}`
-  convert.still(input, actual, args.options, (err) => {
-    if (err) return test.end(err)
-    compareImage(test, expected, actual)
+  convert.still(input, actual, args.options, err => {
+    if (err) throw err
+    compareImage(expected, actual, done)
   })
 }
 
 // process a video, and compare to a reference video output (comparing a single frame)
-exports.video = function (test, args) {
+exports.video = function (args, done) {
   const input = `test-data/input/${args.input}`
   const actual = `test-data/actual/${args.expect}`
   const expected = `test-data/expected/${args.expect}`
-  convert.video(input, actual, args.options, (err) => {
-    if (err) return test.end(err)
-    convert.still(actual, `${actual}.jpg`, {}, (err) => {
-      if (err) return test.end(err)
-      compareImage(test, `${expected}.jpg`, `${actual}.jpg`)
+  convert.video(input, actual, args.options, err => {
+    if (err) throw err
+    convert.still(actual, `${actual}.jpg`, {}, err => {
+      if (err) throw err
+      compareImage(`${expected}.jpg`, `${actual}.jpg`, done)
     })
   })
 }
 
-function compareImage (test, expected, actual) {
+function compareImage (expected, actual, done) {
   const isGif = actual.match(/\.gif$/i)
-  test.test('metadata', t => {
-    const fields = isGif ? ['AnimationIterations', 'FrameCount', 'Duration', 'ImageSize'] : ['ImageSize', 'Megapixels']
-    compareMetadata(t, expected, actual, fields)
-  })
-  test.test('visual', t => {
-    // We have to be less picky when comparing GIFs
-    // because Gifsicle produces slightly different results between versions
-    const tolerance = isGif ? 0.3 : 0.001
-    compareVisual(t, expected, actual, tolerance)
-  })
+  // test metadata
+  const fields = isGif ? ['AnimationIterations', 'FrameCount', 'Duration', 'ImageSize'] : ['ImageSize', 'Megapixels']
+  compareMetadata(expected, actual, fields)
+  // test visual differences
+  // We have to be less picky when comparing GIFs
+  // because Gifsicle produces slightly different results between versions
+  const tolerance = isGif ? 0.3 : 0.001
+  compareVisual(expected, actual, tolerance, done)
 }
 
-function compareMetadata (test, expected, actual, fields) {
-  try {
-    test.deepEqual(
-      _.pick(exiftool(actual), fields),
-      _.pick(exiftool(expected), fields),
-      `${actual} has same metadata as expected`
-    )
-    test.end()
-  } catch (ex) {
-    test.end(`exiftool failed to get metadata`)
-  }
+function compareMetadata (expected, actual, fields) {
+  const expectedFields = _.pick(exiftool(expected), fields)
+  const actualFields = _.pick(exiftool(actual), fields)
+  expect(actualFields).toEqual(expectedFields)
 }
 
-function compareVisual (test, expected, actual, tolerance) {
+function compareVisual (expected, actual, tolerance, done) {
   gm.compare(expected, actual, tolerance, (err, similar, equality) => {
-    if (err) return test.end(err)
-    if (!similar) return test.end(`${actual} is visually different from expected (equality=${equality})`)
-    test.pass(`${actual} is visually similar to expected`)
-    test.end()
+    if (err) throw err
+    expect(similar).toEqual(true)
+    done()
   })
 }
 

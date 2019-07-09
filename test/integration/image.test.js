@@ -1,88 +1,87 @@
 const diff = require('./diff')
-const tape = require('tape')
 
-tape('crops a JPEG file', (test) => {
-  diff.image(test, {
+test('crops a JPEG file', done => {
+  diff.image({
     input: 'images/desk.jpg',
     expect: 'images/desk.thumb.jpg',
     options: { height: 100, width: 100 }
-  })
+  }, done)
 })
 
-tape('resizes a JPEG file proportionally', (test) => {
-  diff.image(test, {
+test('resizes a JPEG file proportionally', done => {
+  diff.image({
     input: 'images/desk.jpg',
     expect: 'images/desk.large.jpg',
     options: { height: 150 }
-  })
+  }, done)
 })
 
-tape('can set a custom output quality', (test) => {
-  diff.image(test, {
+test('can set a custom output quality', done => {
+  diff.image({
     input: 'images/desk.jpg',
     expect: 'images/desk.low.jpg',
     options: { height: 100, quality: 30 }
-  })
+  }, done)
 })
 
-tape('create a cropped frame from an animated GIF', (test) => {
-  diff.image(test, {
+test('create a cropped frame from an animated GIF', done => {
+  diff.image({
     input: 'images/simpsons.gif',
     expect: 'images/simpsons.cropped.gif',
     options: {
       height: 150,
       width: 150
     }
-  })
+  }, done)
 })
 
-tape('creates a resized frame from an animated GIF', (test) => {
-  diff.image(test, {
+test('creates a resized frame from an animated GIF', done => {
+  diff.image({
     input: 'images/simpsons.gif',
     expect: 'images/simpsons.resized.gif',
     options: {
       height: 150
     }
-  })
+  }, done)
 })
 
-tape('creates a resized animated GIF', (test) => {
-  diff.image(test, {
+test('creates a resized animated GIF', done => {
+  diff.image({
     input: 'images/simpsons.gif',
     expect: 'images/simpsons.anim.gif',
     options: {
       height: 150,
       animated: true
     }
-  })
+  }, done)
 })
 
-tape('extract a frame from a transparent animated GIF', (test) => {
-  diff.image(test, {
+test('extract a frame from a transparent animated GIF', done => {
+  diff.image({
     input: 'images/toad.gif',
     expect: 'images/toad.frame.gif',
     options: { height: 100 }
-  })
+  }, done)
 })
 
-tape('resizes a transparent animated GIF', (test) => {
-  diff.image(test, {
+test('resizes a transparent animated GIF', done => {
+  diff.image({
     input: 'images/toad.gif',
     expect: 'images/toad.gif',
     options: { height: 100, animated: true }
-  })
+  }, done)
 })
 
-tape('converts a TIFF to JPEG', (test) => {
-  diff.image(test, {
+test('converts a TIFF to JPEG', done => {
+  diff.image({
     input: 'images/desk.tiff',
     expect: 'images/desk.jpg',
     options: {}
-  })
+  }, done)
 })
 
-tape('can add a watermark in the default location', (test) => {
-  diff.image(test, {
+test('can add a watermark in the default location', done => {
+  diff.image({
     input: 'images/bike.jpg',
     expect: 'images/bike-wm-default.jpg',
     options: {
@@ -90,11 +89,11 @@ tape('can add a watermark in the default location', (test) => {
         file: 'test-data/input/images/watermark.png'
       }
     }
-  })
+  }, done)
 })
 
-tape('can add a watermark in a given location', (test) => {
-  diff.image(test, {
+test('can add a watermark in a given location', done => {
+  diff.image({
     input: 'images/bike.jpg',
     expect: 'images/bike-wm-gravity.jpg',
     options: {
@@ -103,11 +102,11 @@ tape('can add a watermark in a given location', (test) => {
         position: 'NorthEast'
       }
     }
-  })
+  }, done)
 })
 
-tape('can add a tiled watermark', (test) => {
-  diff.image(test, {
+test('can add a tiled watermark', done => {
+  diff.image({
     input: 'images/bike.jpg',
     expect: 'images/bike-wm-tiled.jpg',
     options: {
@@ -116,11 +115,11 @@ tape('can add a tiled watermark', (test) => {
         position: 'Repeat'
       }
     }
-  })
+  }, done)
 })
 
-tape('includes the watermark when resizing', (test) => {
-  diff.image(test, {
+test('includes the watermark when resizing', done => {
+  diff.image({
     input: 'images/bike.jpg',
     expect: 'images/bike-wm-resize.jpg',
     options: {
@@ -129,11 +128,11 @@ tape('includes the watermark when resizing', (test) => {
         file: 'test-data/input/images/watermark.png'
       }
     }
-  })
+  }, done)
 })
 
-tape('ignores the watermark when cropping', (test) => {
-  diff.image(test, {
+test('ignores the watermark when cropping', done => {
+  diff.image({
     input: 'images/bike.jpg',
     expect: 'images/bike-wm-crop.jpg',
     options: {
@@ -143,77 +142,77 @@ tape('ignores the watermark when cropping', (test) => {
         file: 'test-data/input/images/watermark.png'
       }
     }
-  })
+  }, done)
 })
 
-tape('can add custom post-processing arguments', (test) => {
-  diff.image(test, {
+test('can add custom post-processing arguments', done => {
+  diff.image({
     input: 'images/desk.jpg',
     expect: 'images/desk.processed.jpg',
     options: {
       args: ['-equalize', '-modulate 120']
     }
-  })
+  }, done)
 })
 
-tape('can process a single-image HEIC file', (test) => {
-  diff.image(test, {
+test('can process a single-image HEIC file', done => {
+  diff.image({
     input: 'images/heic-single.heic',
     expect: 'images/heic-single.jpg',
     options: {
       height: 300
     }
-  })
+  }, done)
 })
 
-tape('can process a burst-image HEIC file', (test) => {
-  diff.image(test, {
+test('can process a burst-image HEIC file', done => {
+  diff.image({
     input: 'images/heic-burst.heic',
     expect: 'images/heic-burst.jpg',
     options: {
       height: 300
     }
-  })
+  }, done)
 })
 
-tape('can process a live (photo + video) HEIC file', (test) => {
-  diff.image(test, {
+test('can process a live (photo + video) HEIC file', done => {
+  diff.image({
     input: 'images/heic-live.heic',
     expect: 'images/heic-live.jpg',
     options: {
       height: 300
     }
-  })
+  }, done)
 })
 
-tape('can process a HEIC with a P3 color profile', (test) => {
-  diff.image(test, {
+test('can process a HEIC with a P3 color profile', done => {
+  diff.image({
     input: 'images/heic-color-profile.heic',
     expect: 'images/heic-color-profile.jpg',
     options: {
       height: 300
     }
-  })
-})
+  }, done)
+}, 10000)
 
 const ORIENTATIONS = [1, 2, 3, 4, 5, 6, 7, 8]
 
 ORIENTATIONS.forEach((orientation) => {
-  tape(`reads rotation data (landscape ${orientation}) and generates a straight-up image`, (test) => {
-    diff.image(test, {
+  test(`reads rotation data (landscape ${orientation}) and generates a straight-up image`, done => {
+    diff.image({
       input: `rotations/landscape_${orientation}.jpg`,
       expect: `rotations/landscape_${orientation}.jpg`,
       options: { height: 150 }
-    })
+    }, done)
   })
 })
 
 ORIENTATIONS.forEach((orientation) => {
-  tape(`reads rotation data (portrait ${orientation}) and generates a straight-up image`, (test) => {
-    diff.image(test, {
+  test(`reads rotation data (portrait ${orientation}) and generates a straight-up image`, done => {
+    diff.image({
       input: `rotations/portrait_${orientation}.jpg`,
       expect: `rotations/portrait_${orientation}.jpg`,
       options: { width: 150 }
-    })
+    }, done)
   })
 })

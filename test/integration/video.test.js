@@ -1,77 +1,79 @@
 const assert = require('assert')
-const tape = require('tape')
 const diff = require('./diff')
 const convert = require('../../lib/index')
 
-tape('can downsample a video for a smaller filesize', (test) => {
-  diff.video(test, {
+// video tests can take a long time
+jest.setTimeout(15000)
+
+test('can downsample a video for a smaller filesize', done => {
+  diff.video({
     input: 'videos/countdown.mp4',
     expect: 'videos/countdown-small.mp4',
     options: {}
-  })
+  }, done)
 })
 
-tape('can convert a video to webm', (test) => {
-  diff.video(test, {
+test('can convert a video to webm', done => {
+  diff.video({
     input: 'videos/short.mp4',
     expect: 'videos/short.webm',
     options: {
       format: 'webm'
     }
-  })
+  }, done)
 })
 
-tape('can convert to MP4 with a target bitrate', (test) => {
-  diff.video(test, {
+test('can convert to MP4 with a target bitrate', done => {
+  diff.video({
     input: 'videos/countdown.mp4',
     expect: 'videos/countdown-bitrate.mp4',
     options: {
       format: 'mp4',
       bitrate: '100k'
     }
-  })
+  }, done)
 })
 
-tape('can convert to WEBM with a target bitrate', (test) => {
-  diff.video(test, {
+test('can convert to WEBM with a target bitrate', done => {
+  diff.video({
     input: 'videos/countdown.mp4',
     expect: 'videos/countdown-bitrate.webm',
     options: {
       format: 'webm',
       bitrate: '100k'
     }
-  })
+  }, done)
 })
 
-tape('can convert to MP4 with a target quality', (test) => {
-  diff.video(test, {
+test('can convert to MP4 with a target quality', done => {
+  diff.video({
     input: 'videos/countdown.mp4',
     expect: `videos/countdown-quality.mp4`,
     options: {
       format: 'mp4',
       quality: 50
     }
-  })
+  }, done)
 })
 
-tape('can convert to WEBM with a target quality', (test) => {
-  diff.video(test, {
+test('can convert to WEBM with a target quality', done => {
+  diff.video({
     input: 'videos/countdown.mp4',
     expect: 'videos/countdown-quality.webm',
     options: {
       format: 'webm',
       quality: 50
     }
-  })
+  }, done)
 })
 
-tape('can report progress when processing videos', (t) => {
+test('can report progress when processing videos', done => {
   const report = []
   const input = 'test-data/input/videos/big_buck_bunny.mp4'
   const actual = 'test-data/actual/videos/big_buck_bunny.mp4'
-  const progress = convert.video(input, actual, {}, (err) => {
+  const progress = convert.video(input, actual, {}, err => {
     assertIncreasing(report)
-    t.end(err)
+    done(err)
   })
   progress.on('progress', percent => {
     process.stderr.write(`${percent}% `)

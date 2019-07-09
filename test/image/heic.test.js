@@ -1,50 +1,46 @@
 const childProcess = require('child_process')
 const async = require('async')
 const sinon = require('sinon')
-const redtape = require('redtape')
 const heic = require('../../lib/image/heic')
 
-const tape = redtape({
-  afterEach: function (cb) {
-    sinon.restore()
-    cb()
-  }
+afterEach(() => {
+  sinon.restore()
 })
 
-tape('calls gmagick and exiftool', t => {
+test('calls gmagick and exiftool', done => {
   sinon.stub(childProcess, 'execFile').callsFake(fakeExecFile)
   heic.convert('input1.heic', 'output.jpg', err => {
-    t.equal(err, null)
-    t.equal(childProcess.execFile.callCount, 3)
-    t.equal(childProcess.execFile.getCall(0).args[0], 'magick')
-    t.equal(childProcess.execFile.getCall(1).args[0], 'exiftool')
-    t.equal(childProcess.execFile.getCall(2).args[0], 'magick')
-    t.end()
+    expect(err).toEqual(null)
+    expect(childProcess.execFile.callCount).toEqual(3)
+    expect(childProcess.execFile.getCall(0).args[0]).toEqual('magick')
+    expect(childProcess.execFile.getCall(1).args[0]).toEqual('exiftool')
+    expect(childProcess.execFile.getCall(2).args[0]).toEqual('magick')
+    done()
   })
 })
 
-tape('stops at the first failing call', t => {
+test('stops at the first failing call', done => {
   sinon.stub(childProcess, 'execFile').callsFake(fakeExecFileFail)
   heic.convert('input2.heic', 'output.jpg', err => {
-    t.equal(err.message, 'FAIL')
-    t.equal(childProcess.execFile.callCount, 1)
-    t.equal(childProcess.execFile.getCall(0).args[0], 'magick')
-    t.end()
+    expect(err.message).toEqual('FAIL')
+    expect(childProcess.execFile.callCount).toEqual(1)
+    expect(childProcess.execFile.getCall(0).args[0]).toEqual('magick')
+    done()
   })
 })
 
-tape('only processes each file once', t => {
+test('only processes each file once', done => {
   sinon.stub(childProcess, 'execFile').callsFake(fakeExecFile)
   async.parallel([
     done => heic.convert('input3.heic', 'output.jpg', done),
     done => heic.convert('input3.heic', 'output.jpg', done)
   ]).then(res => {
-    t.equal(childProcess.execFile.callCount, 3)
-    t.end()
+    expect(childProcess.execFile.callCount).toEqual(3)
+    done()
   })
 })
 
-tape('keeps track of files already processed', t => {
+test('keeps track of files already processed', done => {
   sinon.stub(childProcess, 'execFile').callsFake(fakeExecFile)
   async.parallel([
     done => heic.convert('input4.heic', 'output.jpg', done),
@@ -52,8 +48,8 @@ tape('keeps track of files already processed', t => {
     done => heic.convert('input6.heic', 'output.jpg', done),
     done => heic.convert('input4.heic', 'output.jpg', done)
   ]).then(res => {
-    t.equal(childProcess.execFile.callCount, 3 * 3)
-    t.end()
+    expect(childProcess.execFile.callCount).toEqual(3 * 3)
+    done()
   })
 })
 
