@@ -4,6 +4,8 @@
   "description": "Convert / resize / transcode photos & videos to be web-friendly",
   "main": "lib/index.js",
   "scripts": {
+    "test:u": "jest test/unit",
+    "test:i": "jest test/integration",
     "test": "jest",
     "pretest": "standard && require-lint"
   },
