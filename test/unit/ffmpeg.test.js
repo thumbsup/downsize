@@ -33,7 +33,7 @@ test('calls the callback when ffmpeg cannot be launched', done => {
   spawn.setStrategy(cmd => {
     return function (cb) {
       this.emit('error', new Error('spawn ENOENT'))
-      setTimeout(() => cb(1), 10)
+      setTimeout(() => cb(1), 10) // eslint-disable-line standard/no-callback-literal
     }
   })
   ffmpeg.exec(['--fake'], err => {
