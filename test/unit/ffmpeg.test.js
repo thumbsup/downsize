@@ -29,6 +29,19 @@ test('calls the callback with an error when ffmpeg exits with code 1', done => {
   })
 })
 
+test('calls the callback when ffmpeg cannot be launched', done => {
+  spawn.setStrategy(cmd => {
+    return function (cb) {
+      this.emit('error', new Error('spawn ENOENT'))
+      setTimeout(() => cb(1), 10)
+    }
+  })
+  ffmpeg.exec(['--fake'], err => {
+    expect(err.message).toEqual('spawn ENOENT')
+    done()
+  })
+})
+
 test('reports progress when ffmpeg emits a duration update', done => {
   spawn.setStrategy(cmd => {
     return function () {

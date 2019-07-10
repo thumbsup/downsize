@@ -21,3 +21,9 @@ test('crf for vpx', () => {
   expect(ffargs.crf(80, 'vpx')).toBe(24)
   expect(ffargs.crf(100, 'vpx')).toBe(15)
 })
+
+test('handles MTS interlacing', () => {
+  const args = ffargs.prepare('source.mts', 'target.mp4', {})
+  const str = args.join(' ')
+  expect(str).toMatch('-vf yadif=1')
+})
