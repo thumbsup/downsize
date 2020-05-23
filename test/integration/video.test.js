@@ -48,7 +48,7 @@ test('can convert to WEBM with a target bitrate', done => {
 test('can convert to MP4 with a target quality', done => {
   diff.video({
     input: 'videos/countdown.mp4',
-    expect: `videos/countdown-quality.mp4`,
+    expect: 'videos/countdown-quality.mp4',
     options: {
       format: 'mp4',
       quality: 50
@@ -82,7 +82,7 @@ test('can report progress when processing videos', done => {
 })
 
 function assertIncreasing (list) {
-  assert(list.length > 0, `The list should not be empty`)
+  assert(list.length > 0, 'The list should not be empty')
   var last = -1
   for (var i = 0; i < list.length; ++i) {
     assert(list[i] >= last, `Number ${list[i]} should be greater than previous number ${last}`)
