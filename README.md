@@ -135,7 +135,20 @@ The flag is simply ignored if the source file is not a GIF.
 ```
 
 Extract a single frame from the video in `source`, and writes the image to `target`.
-This method supports all  the same options as `.image()`.
+This method supports all the same options as `.image()`, with the addition of:
+
+```js
+opts = {
+  // take the screenshot at the very start of the video
+  seek: 0
+  // take the screenshot after N second (default = 1)
+  seek: 1
+  // take the screenshot in the middle of the video
+  seek: -1
+}
+```
+
+If seeking fails for any reason, the first frame is used instead.
 
 ### .video
 

@@ -31,3 +31,19 @@ test('extracts and crops a frame from an MP4 video', done => {
     options: { height: 100, width: 100 }
   }, done)
 })
+
+test('can extract a frame at a given second', done => {
+  diff.still({
+    input: 'videos/big_buck_bunny.mp4',
+    expect: 'videos/big_buck_bunny_10.jpg',
+    options: { seek: 13 }
+  }, done)
+})
+
+test('can extract a frame in the middle', done => {
+  diff.still({
+    input: 'videos/big_buck_bunny.mp4',
+    expect: 'videos/big_buck_bunny_middle.jpg',
+    options: { seek: -1 }
+  }, done)
+})
