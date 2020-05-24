@@ -1,6 +1,6 @@
 {
   "name": "thumbsup-downsize",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Convert / resize / transcode photos & videos to be web-friendly",
   "main": "lib/index.js",
   "scripts": {
