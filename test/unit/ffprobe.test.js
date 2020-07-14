@@ -7,7 +7,7 @@ afterEach(() => {
 })
 
 test('parses the FFProbe output rounded to 1 digit', done => {
-  sinon.stub(childProcess, 'exec').yields(undefined, '12.3456')
+  sinon.stub(childProcess, 'execFile').yields(undefined, '12.3456')
   ffprobe.getDuration('video.mp4', (err, duration) => {
     expect(err).toBe(null)
     expect(duration).toBe(12.3)
@@ -16,7 +16,7 @@ test('parses the FFProbe output rounded to 1 digit', done => {
 })
 
 test('fail if FFProbe cannot be executed', done => {
-  sinon.stub(childProcess, 'exec').yields(new Error('Not found'))
+  sinon.stub(childProcess, 'execFile').yields(new Error('Not found'))
   ffprobe.getDuration('video.mp4', (err, duration) => {
     expect(err).toBeInstanceOf(Error)
     done()
@@ -24,7 +24,7 @@ test('fail if FFProbe cannot be executed', done => {
 })
 
 test('handles unexpected FFProbe output', done => {
-  sinon.stub(childProcess, 'exec').yields(undefined, 'unexpected')
+  sinon.stub(childProcess, 'execFile').yields(undefined, 'unexpected')
   ffprobe.getDuration('video.mp4', (err, duration) => {
     expect(err).toBeInstanceOf(Error)
     done()
