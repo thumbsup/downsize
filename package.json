@@ -20,11 +20,11 @@
     "tmp": "^0.2.1"
   },
   "devDependencies": {
-    "fs-extra": "^9.0.0",
-    "jest": "^26.0.1",
-    "lodash": "^4.17.15",
+    "fs-extra": "^9.0.1",
+    "jest": "^26.1.0",
+    "lodash": "^4.17.19",
     "mock-spawn": "^0.2.6",
-    "require-lint": "^1.4.0",
+    "require-lint": "^2.0.0",
     "sinon": "^9.0.2",
     "standard": "^14.3.4"
   },
