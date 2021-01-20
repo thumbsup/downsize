@@ -1,4 +1,4 @@
-FROM thumbsupgallery/runtime:alpine
+FROM ghcr.io/thumbsup/build:node-12
 
 WORKDIR /app
 COPY package.json .
