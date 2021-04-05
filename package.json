@@ -4,9 +4,9 @@
   "description": "Convert / resize / transcode photos & videos to be web-friendly",
   "main": "lib/index.js",
   "scripts": {
-    "test:u": "jest test/unit",
-    "test:i": "jest test/integration",
-    "test": "jest",
+    "test:u": "mocha test/unit",
+    "test:i": "mocha test/integration",
+    "test": "mocha",
     "pretest": "standard && require-lint"
   },
   "author": "thumbsup",
@@ -21,10 +21,11 @@
   },
   "devDependencies": {
     "fs-extra": "^9.1.0",
-    "jest": "^26.6.3",
+    "mocha": "^8.2.1",
     "lodash": "^4.17.21",
     "mock-spawn": "^0.2.6",
     "require-lint": "^2.0.2",
+    "should": "^13.2.3",
     "sinon": "^10.0.0",
     "standard": "^14.3.4"
   },

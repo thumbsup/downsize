@@ -1,0 +1,5 @@
+recursive: true
+timeout: 15000
+slow: 15000
+parallel: false
+reporter: list
