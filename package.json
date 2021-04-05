@@ -13,19 +13,19 @@
   "license": "MIT",
   "dependencies": {
     "async": "^3.2.0",
-    "debug": "^4.1.1",
+    "debug": "^4.3.1",
     "gm": "^1.23.1",
     "mkdirp": "^1.0.4",
     "split": "^1.0.1",
     "tmp": "^0.2.1"
   },
   "devDependencies": {
-    "fs-extra": "^9.0.1",
-    "jest": "^26.1.0",
-    "lodash": "^4.17.19",
+    "fs-extra": "^9.1.0",
+    "jest": "^26.6.3",
+    "lodash": "^4.17.21",
     "mock-spawn": "^0.2.6",
-    "require-lint": "^2.0.0",
-    "sinon": "^9.0.2",
+    "require-lint": "^2.0.2",
+    "sinon": "^10.0.0",
     "standard": "^14.3.4"
   },
   "standard": {
