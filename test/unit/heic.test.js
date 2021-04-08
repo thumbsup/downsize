@@ -11,7 +11,7 @@ afterEach(() => {
 describe('heic', () => {
   it('calls gmagick and exiftool', done => {
     sinon.stub(childProcess, 'execFile').callsFake(fakeExecFile)
-    heic.convert('input1.heic', 'output.jpg', err => {
+    heic.convert('input1.heic', err => {
       should(err).eql(null)
       should(childProcess.execFile.callCount).eql(3)
       should(childProcess.execFile.getCall(0).args[0]).eql('magick')
@@ -23,7 +23,7 @@ describe('heic', () => {
 
   it('stops at the first failing call', done => {
     sinon.stub(childProcess, 'execFile').callsFake(fakeExecFileFail)
-    heic.convert('input2.heic', 'output.jpg', err => {
+    heic.convert('input2.heic', err => {
       should(err.message).eql('FAIL')
       should(childProcess.execFile.callCount).eql(1)
       should(childProcess.execFile.getCall(0).args[0]).eql('magick')
@@ -34,8 +34,8 @@ describe('heic', () => {
   it('only processes each file once', done => {
     sinon.stub(childProcess, 'execFile').callsFake(fakeExecFile)
     async.parallel([
-      done => heic.convert('input3.heic', 'output.jpg', done),
-      done => heic.convert('input3.heic', 'output.jpg', done)
+      done => heic.convert('input3.heic', done),
+      done => heic.convert('input3.heic', done)
     ]).then(res => {
       should(childProcess.execFile.callCount).eql(3)
       done()
@@ -45,10 +45,10 @@ describe('heic', () => {
   it('keeps track of files already processed', done => {
     sinon.stub(childProcess, 'execFile').callsFake(fakeExecFile)
     async.parallel([
-      done => heic.convert('input4.heic', 'output.jpg', done),
-      done => heic.convert('input5.heic', 'output.jpg', done),
-      done => heic.convert('input6.heic', 'output.jpg', done),
-      done => heic.convert('input4.heic', 'output.jpg', done)
+      done => heic.convert('input4.heic', done),
+      done => heic.convert('input5.heic', done),
+      done => heic.convert('input6.heic', done),
+      done => heic.convert('input4.heic', done)
     ]).then(res => {
       should(childProcess.execFile.callCount).eql(3 * 3)
       done()
