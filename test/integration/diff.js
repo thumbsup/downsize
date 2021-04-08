@@ -1,4 +1,5 @@
 const _ = require('lodash')
+const should = require('should/as-function')
 const childProcess = require('child_process')
 const gm = require('gm')
 const convert = require('../../lib/index')
@@ -54,13 +55,13 @@ function compareImage (expected, actual, done) {
 function compareMetadata (expected, actual, fields) {
   const expectedFields = _.pick(exiftool(expected), fields)
   const actualFields = _.pick(exiftool(actual), fields)
-  expect(actualFields).toEqual(expectedFields)
+  should(actualFields).eql(expectedFields)
 }
 
 function compareVisual (expected, actual, tolerance, done) {
   gm.compare(expected, actual, tolerance, (err, similar, equality) => {
     if (err) throw err
-    expect(similar).toEqual(true)
+    should(similar).eql(true)
     done()
   })
 }

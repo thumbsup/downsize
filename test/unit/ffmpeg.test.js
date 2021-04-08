@@ -1,109 +1,113 @@
+const should = require('should/as-function')
 const childProcess = require('child_process')
 const ffmpeg = require('../../lib/video/ffmpeg')
 const mockSpawn = require('mock-spawn')
 const sinon = require('sinon')
 
-const spawn = mockSpawn()
-
-beforeEach(() => {
-  sinon.stub(childProcess, 'spawn').callsFake(spawn)
-})
-
-afterEach(() => {
-  childProcess.spawn.restore()
-})
-
-test('calls the callback when ffmpeg exits with code 0', done => {
-  spawn.setStrategy(cmd => spawn.simple(0))
-  ffmpeg.exec(['--fake'], err => {
-    expect(err).toEqual(null)
-    done()
+describe('ffmpeg', () => {
+  beforeEach(() => {
+    sinon.stub(childProcess, 'spawn')
   })
-})
 
-test('calls the callback with an error when ffmpeg exits with code 1', done => {
-  spawn.setStrategy(cmd => spawn.simple(1))
-  ffmpeg.exec(['--fake'], err => {
-    expect(err.message).toEqual('ffmpeg exited with code 1')
-    done()
+  afterEach(() => {
+    childProcess.spawn.restore()
   })
-})
 
-test('calls the callback when ffmpeg cannot be launched', done => {
-  spawn.setStrategy(cmd => {
-    return function (cb) {
+  it('calls the callback when ffmpeg exits with code 0', done => {
+    const spawn = mockSpawn()
+    childProcess.spawn.callsFake(spawn)
+    spawn.setDefault(spawn.simple(0))
+    ffmpeg.exec(['--fake'], err => {
+      should(err).eql(null)
+      done()
+    })
+  })
+
+  it('calls the callback with an error when ffmpeg exits with code 1', done => {
+    const spawn = mockSpawn()
+    childProcess.spawn.callsFake(spawn)
+    spawn.setDefault(spawn.simple(1))
+    ffmpeg.exec(['--fake'], err => {
+      should(err.message).eql('ffmpeg exited with code 1')
+      done()
+    })
+  })
+
+  it('calls the callback when ffmpeg cannot be launched', done => {
+    const spawn = mockSpawn()
+    childProcess.spawn.callsFake(spawn)
+    spawn.setDefault(function (cb) {
       this.emit('error', new Error('spawn ENOENT'))
-      setTimeout(() => cb(1), 10) // eslint-disable-line standard/no-callback-literal
-    }
+    })
+    ffmpeg.exec(['--fake'], err => {
+      should(err.message).eql('spawn ENOENT')
+      done()
+    })
   })
-  ffmpeg.exec(['--fake'], err => {
-    expect(err.message).toEqual('spawn ENOENT')
-    done()
-  })
-})
 
-test('reports progress when ffmpeg emits a duration update', done => {
-  spawn.setStrategy(cmd => {
-    return function () {
+  it('reports progress when ffmpeg emits a duration update', done => {
+    const spawn = mockSpawn()
+    childProcess.spawn.callsFake(spawn)
+    spawn.setDefault(function () {
       this.stderr.write('Duration: 00:00:20.00\n')
       this.stderr.write('frame=1000 fps=100 q=10.0 size=1000kB time=00:00:10.00 bitrate=100.0kbits/s speed=1.00x\n')
-    }
+    })
+    const progress = ffmpeg.exec(['--fake'])
+    progress.on('progress', percent => {
+      should(percent).eql(50)
+      done()
+    })
   })
-  const progress = ffmpeg.exec(['--fake'])
-  progress.on('progress', percent => {
-    expect(percent).toEqual(50)
-    done()
-  })
-})
 
-test('can parse duration and progress even when lines are emitted in chunks', done => {
-  spawn.setStrategy(cmd => {
-    return function () {
+  it('can parse duration and progress even when lines are emitted in chunks', done => {
+    const spawn = mockSpawn()
+    childProcess.spawn.callsFake(spawn)
+    spawn.setDefault(function () {
       this.stderr.write('Duration: 00:')
       this.stderr.write('00:20.00\n')
       this.stderr.write('frame=1000 fps=100 q=10.0 size=1000kB time=00:00:')
       this.stderr.write('10.00 bitrate=100.0kbits/s speed=1.00x\n')
-    }
+    })
+    const progress = ffmpeg.exec(['--fake'])
+    progress.on('progress', percent => {
+      should(percent).eql(50)
+      done()
+    })
   })
-  const progress = ffmpeg.exec(['--fake'])
-  progress.on('progress', percent => {
-    expect(percent).toEqual(50)
-    done()
-  })
-})
 
-test('reports progress even when duration and time are emitted together', done => {
-  spawn.setStrategy(cmd => {
-    return function () {
+  it('reports progress even when duration and time are emitted together', done => {
+    const spawn = mockSpawn()
+    childProcess.spawn.callsFake(spawn)
+    spawn.setDefault(function () {
       this.stderr.write(
         'Duration: 00:00:20.00\n' +
         'frame=1000 fps=100 q=10.0 size=1000kB time=00:00:10.00 bitrate=100.0kbits/s speed=1.00x\n'
       )
-    }
+    })
+    const progress = ffmpeg.exec(['--fake'])
+    progress.on('progress', percent => {
+      should(percent).eql(50)
+      done()
+    })
   })
-  const progress = ffmpeg.exec(['--fake'])
-  progress.on('progress', percent => {
-    expect(percent).toEqual(50)
-    done()
-  })
-})
 
-test('reports progress throughout and finally terminates', done => {
-  const percents = []
-  spawn.setStrategy(cmd => {
-    return function (callback) {
+  it('reports progress throughout and finally terminates', done => {
+    const percents = []
+    const spawn = mockSpawn()
+    childProcess.spawn.callsFake(spawn)
+    spawn.setDefault(function (callback) {
       this.stderr.write('Duration: 00:00:40.00\n')
       this.stderr.write('frame=0000 fps=100 q=10.0 size=1000kB time=00:00:10.00 bitrate=100.0kbits/s speed=1.00x\n')
       this.stderr.write('frame=1000 fps=100 q=10.0 size=1000kB time=00:00:20.00 bitrate=100.0kbits/s speed=1.00x\n')
       this.stderr.write('frame=2000 fps=100 q=10.0 size=1000kB time=00:00:30.00 bitrate=100.0kbits/s speed=1.00x\n')
       this.stderr.write('frame=2000 fps=100 q=10.0 size=1000kB time=00:00:40.00 bitrate=100.0kbits/s speed=1.00x\n')
       callback(0) // eslint-disable-line standard/no-callback-literal
-    }
+    })
+    const progress = ffmpeg.exec(['--fake'], err => {
+      should(err).eql(null)
+      should(percents).eql([25, 50, 75, 100])
+      done()
+    })
+    progress.on('progress', percent => percents.push(percent))
   })
-  const progress = ffmpeg.exec(['--fake'], err => {
-    expect(err).toEqual(null)
-    expect(percents).toEqual([25, 50, 75, 100])
-    done()
-  })
-  progress.on('progress', percent => percents.push(percent))
 })

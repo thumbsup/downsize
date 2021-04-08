@@ -1,3 +1,4 @@
+const should = require('should/as-function')
 const gmagick = require('../../lib/image/gmagick')
 const sinon = require('sinon')
 
@@ -7,50 +8,52 @@ function gm () {
   }
 }
 
-test('no arguments', () => {
-  const image = gm()
-  gmagick.addRawArgs(image, undefined)
-  expect(image.out.callCount).toEqual(0)
-})
+describe('gmagick', () => {
+  it('no arguments', () => {
+    const image = gm()
+    gmagick.addRawArgs(image, undefined)
+    should(image.out.callCount).eql(0)
+  })
 
-test('empty array of arguments', () => {
-  const image = gm()
-  gmagick.addRawArgs(image, [])
-  expect(image.out.callCount).toEqual(0)
-})
+  it('empty array of arguments', () => {
+    const image = gm()
+    gmagick.addRawArgs(image, [])
+    should(image.out.callCount).eql(0)
+  })
 
-test('single argument with no values', () => {
-  const image = gm()
-  gmagick.addRawArgs(image, ['-equalize'])
-  expect(image.out.callCount).toEqual(1)
-  expect(image.out.args[0]).toEqual(['-equalize'])
-})
+  it('single argument with no values', () => {
+    const image = gm()
+    gmagick.addRawArgs(image, ['-equalize'])
+    should(image.out.callCount).eql(1)
+    should(image.out.args[0]).eql(['-equalize'])
+  })
 
-test('single argument with one value', () => {
-  const image = gm()
-  gmagick.addRawArgs(image, ['-modulate 120'])
-  expect(image.out.callCount).toEqual(1)
-  expect(image.out.args[0]).toEqual(['-modulate', '120'])
-})
+  it('single argument with one value', () => {
+    const image = gm()
+    gmagick.addRawArgs(image, ['-modulate 120'])
+    should(image.out.callCount).eql(1)
+    should(image.out.args[0]).eql(['-modulate', '120'])
+  })
 
-test('single argument with space-separated values', () => {
-  const image = gm()
-  gmagick.addRawArgs(image, ['-unsharp 2 0.5 0.5 0'])
-  expect(image.out.callCount).toEqual(1)
-  expect(image.out.args[0]).toEqual(['-unsharp', '2 0.5 0.5 0'])
-})
+  it('single argument with space-separated values', () => {
+    const image = gm()
+    gmagick.addRawArgs(image, ['-unsharp 2 0.5 0.5 0'])
+    should(image.out.callCount).eql(1)
+    should(image.out.args[0]).eql(['-unsharp', '2 0.5 0.5 0'])
+  })
 
-test('multiple arguments', () => {
-  const image = gm()
-  gmagick.addRawArgs(image, [
-    '-equalize',
-    '-modulate 120',
-    '-unsharp 2 0.5 0.5 0'
-  ])
-  expect(image.out.callCount).toEqual(3)
-  expect(image.out.args).toEqual([
-    ['-equalize'],
-    ['-modulate', '120'],
-    ['-unsharp', '2 0.5 0.5 0']
-  ])
+  it('multiple arguments', () => {
+    const image = gm()
+    gmagick.addRawArgs(image, [
+      '-equalize',
+      '-modulate 120',
+      '-unsharp 2 0.5 0.5 0'
+    ])
+    should(image.out.callCount).eql(3)
+    should(image.out.args).eql([
+      ['-equalize'],
+      ['-modulate', '120'],
+      ['-unsharp', '2 0.5 0.5 0']
+    ])
+  })
 })
