@@ -211,6 +211,15 @@ The default value is `none`
 opts = { video-hwaccel: 'vaapi' }
 ```
 
+##### Video FPS
+
+The default export video FPS is 25. You can specify an explicit FPS by adding a `framerate` option:
+
+```js
+opts = { framerate: 60 }
+opts = { framerate: 'preserve' }   // preserve the original source video's FPS
+```
+
 ##### Conversion progress
 
 The `.video()` call returns an [EventEmitter](https://nodejs.org/api/events.html)
