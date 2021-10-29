@@ -72,6 +72,13 @@ opts = { height: 100, width: 100 }
 opts = { quality: 80 }
 ```
 
+##### Preserve EXIF Data
+
+```js
+// note: this will no longer auto-orient images according to its EXIF data
+opts = { preserveExif: true }
+```
+
 ##### Watermark
 
 You can overlay a transparent watermark over the final image:
@@ -218,6 +225,12 @@ The default export video FPS is 25. You can specify an explicit FPS by adding a 
 ```js
 opts = { framerate: 60 }
 opts = { framerate: 0 }   // preserve the original source video's FPS
+```
+
+##### Preserve Metadata
+
+```js
+opts = { preserveMetadata: true }
 ```
 
 ##### Conversion progress
