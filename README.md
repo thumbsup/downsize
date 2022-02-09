@@ -199,6 +199,18 @@ This is not compatible with the `quality` option.
 opts = { bitrate: '1200k' }
 ```
 
+##### HW acceleration
+
+Enable VAAPI HW accleration if supported on your platform (typically Intel/AMD chipsets.) 
+Requires intel-media-driver package to enable.
+This is not compatiable with the `quality` option and requires a `bitrate` setting.
+The default value is `none`
+
+```js
+// values 'vaapi' or 'none'
+opts = { video-hwaccel: 'vaapi' }
+```
+
 ##### Conversion progress
 
 The `.video()` call returns an [EventEmitter](https://nodejs.org/api/events.html)
