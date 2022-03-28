@@ -81,8 +81,8 @@ describe('video', () => {
 
   function assertIncreasing (list) {
     assert(list.length > 0, 'The list should not be empty')
-    var last = -1
-    for (var i = 0; i < list.length; ++i) {
+    let last = -1
+    for (let i = 0; i < list.length; ++i) {
       assert(list[i] >= last, `Number ${list[i]} should be greater than previous number ${last}`)
       last = list[i]
     }

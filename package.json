@@ -27,7 +27,7 @@
     "require-lint": "^2.0.2",
     "should": "^13.2.3",
     "sinon": "^10.0.0",
-    "standard": "^14.3.4"
+    "standard": "^16.0.4"
   },
   "standard": {
     "globals": [

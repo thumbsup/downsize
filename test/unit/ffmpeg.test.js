@@ -101,7 +101,7 @@ describe('ffmpeg', () => {
       this.stderr.write('frame=1000 fps=100 q=10.0 size=1000kB time=00:00:20.00 bitrate=100.0kbits/s speed=1.00x\n')
       this.stderr.write('frame=2000 fps=100 q=10.0 size=1000kB time=00:00:30.00 bitrate=100.0kbits/s speed=1.00x\n')
       this.stderr.write('frame=2000 fps=100 q=10.0 size=1000kB time=00:00:40.00 bitrate=100.0kbits/s speed=1.00x\n')
-      callback(0) // eslint-disable-line standard/no-callback-literal
+      callback(0) // eslint-disable-line node/no-callback-literal
     })
     const progress = ffmpeg.exec(['--fake'], err => {
       should(err).eql(null)
