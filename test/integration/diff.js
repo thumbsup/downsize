@@ -59,9 +59,12 @@ function compareMetadata (expected, actual, fields) {
 }
 
 function compareVisual (expected, actual, tolerance, done) {
-  gm.compare(expected, actual, tolerance, (err, similar, equality) => {
+  gm.compare(expected, actual, tolerance, (err, similar, equality, raw) => {
     if (err) throw err
-    should(similar).eql(true)
+    should(similar).eql(true, `
+      Equality > tolerance (${equality.toFixed(5)} > ${tolerance})
+      Raw comparison: ${raw}
+    `)
     done()
   })
 }
