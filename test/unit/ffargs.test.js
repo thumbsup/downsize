@@ -29,4 +29,24 @@ describe('ffargs', () => {
     const str = args.join(' ')
     should(str).match(/-vf yadif=1/)
   })
+
+  describe('framerate', () => {
+    it('sets to a default value if not specified', () => {
+      const args = ffargs.prepare('source.mts', 'target.mp4', {})
+      const str = args.join(' ')
+      should(str).match(/-r 25/)
+    })
+
+    it('can specify a value', () => {
+      const args = ffargs.prepare('source.mts', 'target.mp4', { framerate: 60 })
+      const str = args.join(' ')
+      should(str).match(/-r 60/)
+    })
+
+    it('keeps the source framerate if set to 0', () => {
+      const args = ffargs.prepare('source.mts', 'target.mp4', { framerate: 0 })
+      const str = args.join(' ')
+      should(str).not.match(/-r/)
+    })
+  })
 })
