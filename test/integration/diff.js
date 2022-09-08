@@ -40,6 +40,17 @@ exports.video = function (args, done) {
   })
 }
 
+exports.metadata = function (type, args, done) {
+  const input = `test-data/input/${args.input}`
+  const actual = `test-data/actual/${args.input}`
+  convert[type](input, actual, args.options, (err) => {
+    const output = childProcess.execSync(`exiftool -j -g ${actual}`)
+    const fields = JSON.parse(output)[0]
+    if (err) throw err
+    done(err, fields)
+  })
+}
+
 function compareImage (expected, actual, done) {
   const isGif = actual.match(/\.gif$/i)
   // test metadata

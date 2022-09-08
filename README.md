@@ -72,11 +72,15 @@ opts = { height: 100, width: 100 }
 opts = { quality: 80 }
 ```
 
-##### Preserve EXIF Data
+##### Preserving metadata
+
+By default, all metadata is removed from downsized images.
+This option will keep all EXIF / IPTC / XMP metadata in the target files.
+
+When setting this option to true, images will no longer be auto-rotated.
 
 ```js
-// note: this will no longer auto-orient images according to its EXIF data
-opts = { preserveExif: true }
+opts = { keepMetadata: true }
 ```
 
 ##### Watermark
@@ -227,10 +231,13 @@ opts = { framerate: 60 }
 opts = { framerate: 0 }   // preserve the original source video's FPS
 ```
 
-##### Preserve Metadata
+##### Preserving Metadata
+
+By default, all metadata is removed from the target video.
+This option preserves the metadata.
 
 ```js
-opts = { preserveMetadata: true }
+opts = { keepMetadata: true }
 ```
 
 ##### Conversion progress
