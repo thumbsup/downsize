@@ -1,3 +1,4 @@
+const should = require('should/as-function')
 const assert = require('assert')
 const diff = require('./diff')
 const convert = require('../../lib/index')
@@ -63,6 +64,30 @@ describe('video', () => {
         quality: 50
       }
     }, done)
+  })
+
+  it('removes metadata by default', done => {
+    diff.metadata('video', {
+      input: 'videos/metadata.mp4',
+      options: {}
+    }, (err, fields) => {
+      should(err).be.null()
+      should(fields).not.have.propertyByPath('QuickTime', 'Title')
+      should(fields).not.have.propertyByPath('QuickTime', 'GPSCoordinates')
+      done()
+    })
+  })
+
+  it('can optionally keep metadata', done => {
+    diff.metadata('video', {
+      input: 'videos/metadata.mp4',
+      options: { keepMetadata: true }
+    }, (err, fields) => {
+      should(err).be.null()
+      should(fields).have.propertyByPath('QuickTime', 'Title').eql('Cool video')
+      should(fields).have.propertyByPath('QuickTime', 'GPSCoordinates').eql('60 deg 0\' 0.00" N, 10 deg 0\' 0.00" E, 0 m Above Sea Level')
+      done()
+    })
   })
 
   it('can report progress when processing videos', done => {

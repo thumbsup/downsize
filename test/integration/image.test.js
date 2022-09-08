@@ -1,3 +1,4 @@
+const should = require('should/as-function')
 const diff = require('./diff')
 
 describe('image', () => {
@@ -154,6 +155,30 @@ describe('image', () => {
         args: ['-equalize', '-modulate 120']
       }
     }, done)
+  })
+
+  it('removes all metadata by default', done => {
+    diff.metadata('image', {
+      input: 'images/metadata.jpg',
+      options: { height: 150 }
+    }, (err, fields) => {
+      should(err).be.undefined()
+      should(fields).not.have.properties(['EXIF', 'XMP', 'IPTC'])
+      done()
+    })
+  })
+
+  it('can optionally keep metadata', done => {
+    diff.metadata('image', {
+      input: 'images/metadata.jpg',
+      options: { height: 150, keepMetadata: true }
+    }, (err, fields) => {
+      should(err).be.undefined()
+      should(fields).have.propertyByPath('EXIF', 'ImageDescription').eql('Red bike')
+      should(fields).have.propertyByPath('XMP', 'Subject').eql('Bike')
+      should(fields).have.propertyByPath('IPTC', 'Keywords').eql('bike')
+      done()
+    })
   })
 
   const ORIENTATIONS = [1, 2, 3, 4, 5, 6, 7, 8]
