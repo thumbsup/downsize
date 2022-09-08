@@ -217,7 +217,7 @@ The default export video FPS is 25. You can specify an explicit FPS by adding a 
 
 ```js
 opts = { framerate: 60 }
-opts = { framerate: 'preserve' }   // preserve the original source video's FPS
+opts = { framerate: 0 }   // preserve the original source video's FPS
 ```
 
 ##### Conversion progress
