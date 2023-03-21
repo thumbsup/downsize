@@ -1,7 +1,9 @@
+docs
 node_modules
 test
 test-data
 Dockerfile
 .dockerignore
+.github
+.mocharc.yml
 .npmignore
-.travis.yml
