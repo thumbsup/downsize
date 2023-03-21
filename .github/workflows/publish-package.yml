@@ -1,0 +1,23 @@
+name: Publish NPM package
+
+# This workflow runs every time a version tag is pushed
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+
+  # Publish the npm package
+  publish:
+    name: Publish package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm publish --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
