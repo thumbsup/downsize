@@ -212,14 +212,14 @@ opts = { bitrate: '1200k' }
 
 ##### HW acceleration
 
-Enable VAAPI HW accleration if supported on your platform (typically Intel/AMD chipsets.) 
+Enable VAAPI HW acceleration if supported on your platform (typically Intel/AMD chipsets).
 Requires intel-media-driver package to enable.
 This is not compatiable with the `quality` option and requires a `bitrate` setting.
-The default value is `none`
+The default value is `none`.
 
 ```js
 // values 'vaapi' or 'none'
-opts = { video-hwaccel: 'vaapi' }
+opts = { hwaccel: 'vaapi' }
 ```
 
 ##### Video FPS
