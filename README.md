@@ -6,9 +6,8 @@ This is one of the core modules of [thumbsup.github.io](https://thumbsup.github.
 
 [![NPM](http://img.shields.io/npm/v/thumbsup-downsize.svg?style=flat-square)](https://npmjs.org/package/thumbsup-downsize)
 [![License](http://img.shields.io/npm/l/thumbsup-downsize.svg?style=flat-square)](https://github.com/thumbsup/thumbsup-downsize)
-[![Build Status](http://img.shields.io/travis/thumbsup/downsize.svg?style=flat-square)](http://travis-ci.org/thumbsup/downsize)
-[![Dependencies](http://img.shields.io/david/thumbsup/downsize.svg?style=flat-square)](https://david-dm.org/thumbsup/downsize)
-[![Dev dependencies](http://img.shields.io/david/dev/thumbsup/downsize.svg?style=flat-square)](https://david-dm.org/thumbsup/downsize)
+![Tests](https://github.com/thumbsup/downsize/actions/workflows/test.yml/badge.svg)
+![Dependencies](https://img.shields.io/librariesio/release/npm/thumbsup-downsize)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](http://standardjs.com/)
 
 ## Setup
