@@ -24,10 +24,32 @@ describe('ffargs', () => {
     should(ffargs.crf(100, 'vpx')).eql(15)
   })
 
-  it('handles MTS interlacing', () => {
-    const args = ffargs.prepare('source.mts', 'target.mp4', {})
-    const str = args.join(' ')
-    should(str).match(/-vf yadif=1/)
+  describe('video filters', () => {
+    it('uses yuv420p chroma subsampling by default', () => {
+      // videos from recent iPhones use yuv420p10le
+      // once converted to h264 they don't play well in browsers / macOS finder
+      // ffmpeg recommends using yuv420p for best compatibility
+      // see http://trac.ffmpeg.org/wiki/Encode/H.264
+      // and https://trac.ffmpeg.org/wiki/Encode/VP9
+      const vf = ffargs.videoFilters('source.mov', {})
+      should(vf).match(/format=yuv420p/)
+    })
+
+    it('handles MTS interlacing', () => {
+      const vf = ffargs.videoFilters('source.mts', {})
+      should(vf).match(/yadif=1,format=yuv420p/)
+    })
+
+    it('handles VAAPI hardware acceleration', () => {
+      const vf = ffargs.videoFilters('source.mov', { hwaccel: 'vaapi', bitrate: '1200k' })
+      should(vf).match(/format=nv12\|vaapi,hwupload/)
+    })
+
+    it('passes the video filter argument', () => {
+      const args = ffargs.prepare('source.mov', 'target.mp4', {})
+      const str = args.join(' ')
+      should(str).match(/-vf format=yuv420p/)
+    })
   })
 
   describe('framerate', () => {
