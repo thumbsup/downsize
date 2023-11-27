@@ -57,18 +57,25 @@ describe('ffargs', () => {
       const args = ffargs.prepare('source.mts', 'target.mp4', {})
       const str = args.join(' ')
       should(str).match(/-r 25/)
+      // these are not compatible with -r anymore with ffmpeg v6
+      // we simply default to -fps_mode=auto
+      should(str).not.match(/-vsync/)
+      should(str).not.match(/-fps_mode/)
     })
 
-    it('can specify a value', () => {
+    it('can specify a framerate value', () => {
       const args = ffargs.prepare('source.mts', 'target.mp4', { framerate: 60 })
       const str = args.join(' ')
       should(str).match(/-r 60/)
+      should(str).not.match(/-vsync/)
+      should(str).not.match(/-fps_mode/)
     })
 
     it('keeps the source framerate if set to 0', () => {
       const args = ffargs.prepare('source.mts', 'target.mp4', { framerate: 0 })
       const str = args.join(' ')
       should(str).not.match(/-r/)
+      should(str).match(/-fps_mode vfr/)
     })
   })
 })
