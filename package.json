@@ -7,7 +7,7 @@
     "test:u": "mocha test/unit",
     "test:i": "mocha test/integration",
     "test": "mocha",
-    "pretest": "standard && require-lint"
+    "pretest": "standard && depcheck"
   },
   "author": "thumbsup",
   "license": "MIT",
@@ -19,11 +19,11 @@
     "tmp": "^0.2.1"
   },
   "devDependencies": {
+    "depcheck": "^1.4.7",
     "fs-extra": "^11.1.1",
     "lodash": "^4.17.21",
     "mocha": "^10.2.0",
     "mock-spawn": "^0.2.6",
-    "require-lint": "^2.0.3",
     "should": "^13.2.3",
     "sinon": "^17.0.1",
     "standard": "^17.1.0"
