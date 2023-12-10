@@ -1,6 +1,6 @@
+const childProcess = require('node:child_process')
 const _ = require('lodash')
 const should = require('should/as-function')
-const childProcess = require('child_process')
 const gm = require('gm')
 const convert = require('../../lib/index')
 

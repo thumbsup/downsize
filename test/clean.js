@@ -1,5 +1,5 @@
+const path = require('node:path')
 const fs = require('fs-extra')
-const path = require('path')
 
 module.exports = async () => {
   // Clean up test data before the tests run

@@ -1,6 +1,6 @@
 const should = require('should/as-function')
-const gmagick = require('../../lib/image/gmagick')
 const sinon = require('sinon')
+const gmagick = require('../../lib/image/gmagick')
 
 function gm () {
   return {

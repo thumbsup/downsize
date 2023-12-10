@@ -1,5 +1,5 @@
+const childProcess = require('node:child_process')
 const should = require('should/as-function')
-const childProcess = require('child_process')
 const async = require('async')
 const sinon = require('sinon')
 const heic = require('../../lib/image/heic')

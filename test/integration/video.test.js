@@ -1,5 +1,5 @@
+const assert = require('node:assert')
 const should = require('should/as-function')
-const assert = require('assert')
 const diff = require('./diff')
 const convert = require('../../lib/index')
 

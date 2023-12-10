@@ -1,6 +1,6 @@
+const childProcess = require('node:child_process')
 const should = require('should/as-function')
 const sinon = require('sinon')
-const childProcess = require('child_process')
 const ffprobe = require('../../lib/video/ffprobe')
 
 afterEach(() => {
