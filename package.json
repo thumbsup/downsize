@@ -32,13 +32,8 @@
     "standard": "^17.1.0"
   },
   "standard": {
-    "globals": [
-      "test",
-      "describe",
-      "it",
-      "expect",
-      "beforeEach",
-      "afterEach"
+    "env": [
+      "mocha"
     ]
   }
 }
