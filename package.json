@@ -3,6 +3,9 @@
   "version": "2.5.2",
   "description": "Convert / resize / transcode photos & videos to be web-friendly",
   "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "test:u": "mocha test/unit",
     "test:i": "mocha test/integration",
